@@ -32,11 +32,11 @@ LR_CONSTANT_100 = [0.2, 0.4, 0.6, 0.8, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1
 class Test:
     optimizer = optim.SGD([{"params": torch.tensor([0])}], lr=1, momentum=0.9)
 
-    def _get_lrs(self, strategy, method, steps: int = 100, final_lr_ratio: float = 0.001):
+    def _get_lrs(self, strategy, method, total_steps: int = 100, final_lr_ratio: float = 0.001):
         lrs = []
         scheduler = LRScheduler(
             self.optimizer,
-            total_steps=steps,
+            total_steps=total_steps,
             final_lr_ratio=final_lr_ratio,
             strategy=strategy,
             method=method,

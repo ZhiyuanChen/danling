@@ -11,7 +11,7 @@ nav:
   - DanLing: index.md
   - Runner:
       - runner/index.md
-      - RunnerState: runner/runner_state.md
+      - Config: runner/runner_state.md
       - BaseRunner: runner/base_runner.md
       - AccelerateRunner: runner/accelerate_runner.md
       - Utilities: runner/utils.md
@@ -196,6 +196,7 @@ plugins:
             - https://pytorch.org/docs/stable/objects.inv
             - https://pytorch.org/torcheval/stable/objects.inv
             - https://huggingface.co/docs/transformers/master/en/objects.inv
+            - https://huggingface.co/docs/accelerate/master/en/objects.inv
             - https://chanfig.danling.org/objects.inv
             - https://lightning.ai/docs/torchmetrics/stable/objects.inv
           rendering:

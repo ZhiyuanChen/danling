@@ -15,7 +15,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the LICENSE file for more details.
 
-from . import defaults
 from .basex import Base58, Base62, Base64, BaseX, base58, base62, base64
 from .contextmanagers import debug
 from .decorators import catch, ensure_dir, flexible_decorator, method_cache
@@ -38,5 +37,4 @@ __all__ = [
     "base58",
     "base62",
     "base64",
-    "defaults",
 ]

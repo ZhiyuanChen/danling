@@ -16,7 +16,7 @@
 # See the LICENSE file for more details.
 
 import torchvision
-from chanfig import Config, Registry
+from chanfig import Registry
 from torch import nn, optim
 
 import danling as dl
@@ -26,7 +26,7 @@ OPTIMIZERS.register(optim.AdamW, "adamw")
 OPTIMIZERS.register(optim.SGD, "sgd")
 
 
-class MNISTConfig(Config):
+class MNISTConfig(dl.Config):
     epoch_end = 2
     log = False
     tensorboard = False
@@ -37,6 +37,7 @@ class MNISTConfig(Config):
     patience = 1
 
     def __init__(self):
+        super().__init__()
         self.network.name = "resnet18"
         self.dataset.download = True
         self.dataset.root = "data"
@@ -44,7 +45,7 @@ class MNISTConfig(Config):
         self.optim.name = "adamw"
         self.optim.lr = 1e-3
         self.optim.weight_decay = 1e-4
-        self.lr_scheduler.strategy = "cosine"
+        self.sched.strategy = "cosine"
 
     def post(self):
         self.copy_class_attributes()
@@ -52,7 +53,7 @@ class MNISTConfig(Config):
 
 
 class MNISTRunner(dl.TorchRunner):
-    def __init__(self, config: Config):
+    def __init__(self, config: dl.Config):
         super().__init__(config)
 
         self.dataset.transform = torchvision.transforms.Compose(
@@ -70,7 +71,7 @@ class MNISTRunner(dl.TorchRunner):
         self.model = getattr(torchvision.models, self.network.name)(pretrained=False, num_classes=10)
         self.model.conv1 = nn.Conv2d(1, 64, 1, bias=False)
         self.optimizer = OPTIMIZERS.build(params=self.model.parameters(), **self.optim)
-        self.scheduler = dl.optim.LRScheduler(self.optimizer, total_steps=self.trainable_steps, **self.lr_scheduler)
+        self.scheduler = dl.optim.LRScheduler(self.optimizer, total_steps=self.trainable_steps, **self.sched)
         self.criterion = nn.CrossEntropyLoss()
 
         self.metrics = dl.metrics.multiclass_metrics(num_classes=10)

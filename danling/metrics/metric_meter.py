@@ -214,7 +214,7 @@ class MultiTaskMetricMeters(MultiTaskAverageMeters):
 
     def update(  # type: ignore[override] # pylint: disable=W0221
         self,
-        values: Mapping[str, Mapping[str, Tuple[Tensor | NestedTensor | Sequence, Tensor | NestedTensor | Sequence]]],
+        values: Mapping[str, Tuple[Tensor | NestedTensor | Sequence, Tensor | NestedTensor | Sequence]],
     ) -> None:
         r"""
         Updates the average and current value in all meters.
