@@ -17,7 +17,7 @@
 
 import sys
 
-sys.path.insert(0, "demo/vision")
+sys.path.insert(0, "demo")
 
 from torch_mnist import MNISTConfig, MNISTRunner  # noqa: E402
 

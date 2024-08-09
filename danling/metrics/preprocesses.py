@@ -58,6 +58,8 @@ def preprocess(
         input, target = input.concat, target.concat
     if ignored_index is not None:
         input, target = input[target != ignored_index], target[target != ignored_index]
+    if input.numel() == target.numel():
+        return input.squeeze(), target.squeeze()
     return input, target
 
 
