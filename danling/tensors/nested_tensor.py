@@ -1144,6 +1144,9 @@ class NestedTensor:
 
         return self.tensor.reshape(*shape)
 
+    def __iter__(self):
+        return iter(self._storage)
+
 
 NestedTensorFunc = TorchFuncRegistry()
 

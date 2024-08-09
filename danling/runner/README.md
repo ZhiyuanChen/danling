@@ -4,26 +4,26 @@ The Runner of DanLing sets up the basic environment for running neural networks.
 
 ## Components
 
-For cross-platform compatibilities, DanLing features a two-level Runner + RunnerState system.
+For cross-platform compatibilities, DanLing features a two-level Runner + Config system.
 
 ### PlatformRunner
 
 PlatformRunner implements platform-specific features like `step` and `prepare`.
 
-The Runner contains all runtime information that is irrelevant to the checkpoint (e.g. `world_size`, `rank`, etc.). All other information should be saved in `RunnerState`.
+The Runner contains all runtime information that is irrelevant to the checkpoint (e.g. `world_size`, `rank`, etc.). All other information should be saved in `Config`.
 
 Currently, only [`AccelerateRunner`][danling.runner.AccelerateRunner] is supported.
 
 ### [`BaseRunner`][danling.runner.BaseRunner]
 
-[`BaseRunner`](danling.runner.BaseRunner) defines shared attributes and implements platform-agnostic features, including `init_logging`, `results` and `scores`.
+[`BaseRunner`][danling.runner.BaseRunner] defines shared attributes and implements platform-agnostic features, including `init_logging`, `results` and `scores`.
 
-### [`RunnerState`][danling.runner.RunnerState]
+### [`Config`][danling.runner.Config]
 
-[`RunnerState`][danling.runner.RunnerState] stores the state of a run (e.g. `epochs`, `run_id`, `network`, etc.).
+[`Config`][danling.runner.Config] stores the state of a run (e.g. `epoch`, `run_id`, `network`, etc.).
 
-With `RunnerState` and corresponding weights, you can resume a run from any point.
-Therefore, all members in `RunnerState` will be saved in the checkpoint, and thus should be json serialisable.
+With `Config` and corresponding weights, you can resume a run from any point.
+Therefore, all members in `Config` will be saved in the checkpoint, and thus should be json serialisable.
 
 ## Experiments Management
 

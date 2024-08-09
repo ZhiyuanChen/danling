@@ -19,12 +19,17 @@ from __future__ import annotations
 
 import os
 import sys
+from collections.abc import Mapping
 from contextlib import suppress
 from datetime import datetime
 from enum import auto
 from functools import wraps
+from math import isnan
 from typing import Any
 from warnings import warn
+
+import torch
+from chanfig import FlatDict, NestedDict
 
 from danling.utils import base62
 
@@ -120,3 +125,39 @@ def on_local_main_process(func):
         return None
 
     return wrapper
+
+
+def format_result(result, format_spec: str = ".4f", depth: int = 0):
+    longest_key = max(len(k) for k in result.keys())
+    repr_list = [_format_result(result, format_spec)]
+    for k, v in result.items():
+        if isinstance(v, Mapping):
+            initials = " " * (longest_key - len(k)) + "\t" * depth
+            repr_list.append(f"{initials}{k}: {format_result(v, format_spec, depth + 1)}")
+    return "\n".join(repr_list)
+
+
+def _format_result(result, format_spec: str = ".4f"):
+    repr_list = []
+    for k, v in result.items():
+        if isinstance(v, (Mapping,)):
+            continue
+        if isinstance(v, (float,)):
+            repr_list.append(f"{k}: {format(v, format_spec)}" if not isnan(v) else f"{k}: NaN\t")
+        else:
+            repr_list.append(f"{k}: {v}\t")
+    return "\t".join(repr_list)
+
+
+def to_device(data: Any, device: torch.device):
+    if isinstance(data, list):
+        return [to_device(i, device) for i in data]
+    if isinstance(data, tuple):
+        return tuple(to_device(i, device) for i in data)
+    if isinstance(data, NestedDict):
+        return NestedDict({k: to_device(v, device) for k, v in data.all_items()})
+    if isinstance(data, dict):
+        return FlatDict({k: to_device(v, device) for k, v in data.items()})
+    if hasattr(data, "to"):
+        return data.to(device)
+    return data

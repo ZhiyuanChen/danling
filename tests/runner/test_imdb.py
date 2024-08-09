@@ -15,21 +15,19 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the LICENSE file for more details.
 
-DEFAULT_RUN_NAME = "Run"
-DEFAULT_EXPERIMENT_NAME = "DanLing"
-DEFAULT_EXPERIMENT_ID = "xxxxxxxxxxxxxxxx"
-DEFAULT_IGNORED_KEYS_IN_HASH = {
-    "timestamp",
-    "iters",
-    "steps",
-    "epochs",
-    "results",
-    "score_split",
-    "score",
-    "log_interval",
-    "save_interval",
-    "tensorboard",
-    "checkpoint",
-    "auto_resume",
-    "experiment_id",
-}
+import sys
+
+sys.path.insert(0, "demo")
+
+from accelerate_imdb import IMDBConfig, IMDBRunner  # noqa: E402
+
+
+class Test:
+    config = IMDBConfig().boot()
+    runner = IMDBRunner(config)
+
+    def test_train(self):
+        self.runner.train()
+
+    def test_evaluate(self):
+        self.runner.evaluate(["val"])

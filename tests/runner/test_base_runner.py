@@ -15,7 +15,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the LICENSE file for more details.
 
-from chanfig import Config as Config_
 from chanfig import NestedDict
 
 import danling as dl
@@ -28,7 +27,7 @@ class Runner(dl.BaseRunner):
         pass
 
 
-class Config(Config_):
+class Config(dl.Config):
     __test__ = False
 
     def __init__(self):
@@ -105,7 +104,7 @@ class Test:
 
     def test_conflict(self):
         runner = self.runner
-        state = runner.state
+        config = runner.config
         runner.conflict = False
         assert not runner.conflict
-        assert state.conflict == 1
+        assert config.conflict == 1
