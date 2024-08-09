@@ -47,6 +47,18 @@ dependencies = [
   "strenum; python_version<'3.11'",
   "tqdm",
 ]
+optional-dependencies.accelerate = [
+  "accelerate",
+  "torch",
+  "torcheval",
+  "torchmetrics",
+]
+optional-dependencies.deepspeed = [
+  "deepspeed",
+  "torch",
+  "torcheval",
+  "torchmetrics",
+]
 optional-dependencies.jax = [
   "flax",
   "jax",
@@ -55,7 +67,6 @@ optional-dependencies.tensorflow = [
   "tensorflow",
 ]
 optional-dependencies.torch = [
-  "accelerate",
   "torch",
   "torcheval",
   "torchmetrics",

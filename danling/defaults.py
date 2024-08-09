@@ -15,4 +15,22 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the LICENSE file for more details.
 
-DEFAULT_EXCLUDE = (KeyboardInterrupt, SystemExit)
+RUN_NAME = "Run"
+EXPERIMENT_NAME = "DanLing"
+EXPERIMENT_ID = "xxxxxxxxxxxxxxxx"
+SEED = 1016
+IGNORED_CONFIG_IN_HASH = {
+    "timestamp",
+    "iter",
+    "step",
+    "epoch",
+    "results",
+    "score_split",
+    "score",
+    "log_interval",
+    "save_interval",
+    "tensorboard",
+    "checkpoint",
+    "auto_resume",
+    "experiment_id",
+}
